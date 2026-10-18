@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # File: scripts/collect_workload.py
-# Description: Build and run mpirun-wrapped rocHPL. Cap timed repeats at large N.
+# Description: Build and run mpirun-wrapped bin/rochpl, a single-GPU rocSOLVER
+#              LU (dgetrf/dgetrs) Linpack, not upstream rocHPL. Cap timed repeats at large N.
 from __future__ import annotations
 
 import argparse
@@ -15,7 +16,33 @@ METRIC_COLUMNS = [
     "percent_of_gpu_fp64_matrix_peak",
     "time_to_solution_across_problem_size_n_s",
 ]
-PEAK = 163.4  # MI300X FP64 matrix peak, TFLOPS
+
+
+def detect_gpu_name() -> str:
+    import subprocess
+    for command in (
+        ["nvidia-smi", "--query-gpu=name", "--format=csv,noheader"],
+        ["rocm-smi", "--showproductname"],
+        ["amd-smi", "static"],
+        ["/opt/rocm/bin/amd-smi", "static"],
+    ):
+        try:
+            completed = subprocess.run(command, check=False, capture_output=True, text=True, timeout=10)
+        except (OSError, subprocess.TimeoutExpired):
+            continue
+        text = (completed.stdout or "") + "\n" + (completed.stderr or "")
+        if text.strip():
+            return text
+    return ""
+
+
+def matrix_peak_percent(tflops: float) -> object:
+    from metric_contract import fp64_matrix_peak
+
+    peak = fp64_matrix_peak(detect_gpu_name())
+    if isinstance(peak, str):
+        return peak
+    return 100.0 * tflops / float(peak)
 
 
 def parse_score(text: str) -> dict[str, float]:
@@ -30,11 +57,11 @@ def parse_score(text: str) -> dict[str, float]:
         if gflops is None:
             gflops = float(match.group(2))
     if gflops is None or seconds is None:
-        raise ValueError("rocHPL score not found")
+        raise ValueError("bin/rochpl score not found")
     tflops = gflops / 1000.0
     return {
         METRIC_COLUMNS[0]: tflops,
-        METRIC_COLUMNS[1]: 100.0 * tflops / PEAK,
+        METRIC_COLUMNS[1]: matrix_peak_percent(tflops),
         METRIC_COLUMNS[2]: seconds,
     }
 
@@ -64,7 +91,7 @@ def clamp_problem_n(problem_n: int) -> int:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Collect rocHPL FP64 samples.")
+    parser = argparse.ArgumentParser(description="Collect rocSOLVER LU FP64 (bin/rochpl) samples.")
     parser.add_argument("--run-dir", required=True)
     parser.add_argument("--raw-file", required=True)
     parser.add_argument("--profile", default="smoke")
@@ -103,7 +130,7 @@ def main() -> int:
     command[command.index("--N") + 1] = str(problem_n)
     repeats = timed_repeats(problem_n, int(args.num_iterations or 1), str(args.profile or "smoke"))
     print(
-        f"[INFO] rocHPL N={problem_n} timed_repeats={repeats} "
+        f"[INFO] rocSOLVER LU (bin/rochpl) N={problem_n} timed_repeats={repeats} "
         f"(requested num_iterations={args.num_iterations})",
         flush=True,
     )
@@ -119,11 +146,11 @@ def main() -> int:
             )
         except subprocess.TimeoutExpired:
             Path(args.raw_file).write_text(
-                "\n".join(texts) + f"\n[FAIL] rocHPL timed out after {solve_timeout}s\n",
+                "\n".join(texts) + f"\n[FAIL] bin/rochpl timed out after {solve_timeout}s\n",
                 encoding="utf-8",
                 newline="\n",
             )
-            print(f"[FAIL] rocHPL N={problem_n} timed out after {solve_timeout}s", flush=True)
+            print(f"[FAIL] bin/rochpl N={problem_n} timed out after {solve_timeout}s", flush=True)
             return 1
         block = "$ " + " ".join(command) + "\n" + (completed.stdout or "") + "\n" + (completed.stderr or "")
         texts.append(block)
@@ -144,7 +171,7 @@ def main() -> int:
         encoding="utf-8",
         newline="\n",
     )
-    print(f"[PASS] collected {len(rows)} rocHPL samples into {args.raw_file}")
+    print(f"[PASS] collected {len(rows)} rocSOLVER LU samples into {args.raw_file}")
     return 0
 
 
