@@ -21,10 +21,10 @@ METRIC_COLUMNS = [
 def detect_gpu_name() -> str:
     import subprocess
     for command in (
-        ["nvidia-smi", "--query-gpu=name", "--format=csv,noheader"],
-        ["rocm-smi", "--showproductname"],
         ["amd-smi", "static"],
         ["/opt/rocm/bin/amd-smi", "static"],
+        ["nvidia-smi", "--query-gpu=name", "--format=csv,noheader"],
+        ["rocm-smi", "--showproductname"],
     ):
         try:
             completed = subprocess.run(command, check=False, capture_output=True, text=True, timeout=10)

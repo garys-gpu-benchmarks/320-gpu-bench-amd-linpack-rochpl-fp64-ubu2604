@@ -107,7 +107,7 @@
   {
     "field_name": "run_benchmark Command Plus Options for Baseline Run",
     "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
-    "value": "bash run_benchmark.sh --baseline --validate --num-gpus 1 --process-grid-P 1 --process-grid-Q 1 --precision fp64 --problem-size-N 32768 --block-size 384 --panel-factorization 2 --warmup-iters 0 --num-iterations 6"
+    "value": "bash run_benchmark.sh --baseline --validate --num-gpus 1 --process-grid-P 1 --process-grid-Q 1 --precision fp64 --problem-size-N 32768 --block-size 384 --panel-factorization 2 --warmup-iters 0 --num-iterations 5"
   },
   {
     "field_name": "run_benchmark Command Plus Options for Extended Run",
@@ -407,7 +407,7 @@
   {
     "field_name": "Profile Parameter Values",
     "source_file": "BenchmarkSpecDefinitions.xlsx::Parameters_SmokeBaselineExtend",
-    "value": "{\"num_gpus\": {\"smoke\": \"1\", \"baseline\": \"1\", \"extended\": \"1\", \"notes\": \"\"}, \"process_grid_P\": {\"smoke\": \"1\", \"baseline\": \"1\", \"extended\": \"1\", \"notes\": \"\"}, \"process_grid_Q\": {\"smoke\": \"1\", \"baseline\": \"1\", \"extended\": \"1\", \"notes\": \"\"}, \"precision\": {\"smoke\": \"fp64\", \"baseline\": \"fp64\", \"extended\": \"fp64\", \"notes\": \"\"}, \"problem_size_N\": {\"smoke\": \"4096\", \"baseline\": \"32768\", \"extended\": \"32768\", \"notes\": \"2026-09-06: AMD Ubuntu 26.04 sibling of 120. Same standardized extended=32768 (hang risk at N=65536).\"}, \"block_size\": {\"smoke\": \"256\", \"baseline\": \"384\", \"extended\": \"512\", \"notes\": \"\"}, \"panel_factorization\": {\"smoke\": \"2\", \"baseline\": \"2\", \"extended\": \"2\", \"notes\": \"\"}, \"warmup_iters\": {\"smoke\": \"0\", \"baseline\": \"0\", \"extended\": \"0\", \"notes\": \"\"}, \"num_iterations\": {\"smoke\": \"1\", \"baseline\": \"6\", \"extended\": \"16\", \"notes\": \"2026-09-06: AMD Ubuntu 26.04 sibling of 120. Same standardized num_iterations baseline=6/extended=16.\"}}"
+    "value": "{\"num_gpus\": {\"smoke\": \"1\", \"baseline\": \"1\", \"extended\": \"1\", \"notes\": \"\"}, \"process_grid_P\": {\"smoke\": \"1\", \"baseline\": \"1\", \"extended\": \"1\", \"notes\": \"\"}, \"process_grid_Q\": {\"smoke\": \"1\", \"baseline\": \"1\", \"extended\": \"1\", \"notes\": \"\"}, \"precision\": {\"smoke\": \"fp64\", \"baseline\": \"fp64\", \"extended\": \"fp64\", \"notes\": \"\"}, \"problem_size_N\": {\"smoke\": \"4096\", \"baseline\": \"32768\", \"extended\": \"32768\", \"notes\": \"2026-09-06: AMD Ubuntu 26.04 sibling of 120. Same standardized extended=32768 (hang risk at N=65536).\"}, \"block_size\": {\"smoke\": \"256\", \"baseline\": \"384\", \"extended\": \"512\", \"notes\": \"\"}, \"panel_factorization\": {\"smoke\": \"2\", \"baseline\": \"2\", \"extended\": \"2\", \"notes\": \"\"}, \"warmup_iters\": {\"smoke\": \"0\", \"baseline\": \"0\", \"extended\": \"0\", \"notes\": \"\"}, \"num_iterations\": {\"smoke\": \"1\", \"baseline\": \"5\", \"extended\": \"16\", \"notes\": \"2026-09-06: AMD Ubuntu 26.04 sibling of 120. Same standardized num_iterations baseline=6/extended=16. | 2026-10-19 GARY_LEDGER (runtime_ledger_Aggregate_375_376_377_378_20261019a_845am; targets baseline under 5 min, extended under 15 min): baseline 6 measured 5:05/4:25 (slower run); fixed start ~3s from smoke; 6 -> 5, predicted ~4:14. Unconfirmed by a fresh run.\"}}"
   },
   {
     "field_name": "Profile Command Authorship",

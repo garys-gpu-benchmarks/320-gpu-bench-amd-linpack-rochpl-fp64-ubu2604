@@ -297,7 +297,7 @@ def finalize_serving_publication(metrics: dict, identity_text: str) -> tuple[dic
 def gpu_form_tokens(name: str) -> set[str]:
     text = (name or "").lower().replace("_", " ").replace("-", " ")
     tokens: set[str] = set()
-    if "mi300" in text or "gfx942" in text or "aqua vanjaram" in text:
+    if "mi300" in text:
         tokens.add("mi300x")
     if "h100" in text:
         tokens.add("h100")

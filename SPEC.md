@@ -16,7 +16,7 @@ Builds local bin/rochpl (rocHPL) with a hipcc GCC pin, then runs mpirun --allow-
 | block_size | `--block-size` | smoke=256, baseline=384, extended=512 | 384 | From Parameter list; see Execution Description With Parameters. |
 | panel_factorization | `--panel-factorization` | smoke=2, baseline=2, extended=2 | 2 | From Parameter list; see Execution Description With Parameters. |
 | warmup_iters | `--warmup-iters` | smoke=0, baseline=0, extended=0 | 0 | From Parameter list; see Execution Description With Parameters. |
-| num_iterations | `--num-iterations` | smoke=1, baseline=6, extended=16 | 6 | From Parameter list; see Execution Description With Parameters. |
+| num_iterations | `--num-iterations` | smoke=1, baseline=5, extended=16 | 5 | From Parameter list; see Execution Description With Parameters. |
 
 ## Invocation
 
