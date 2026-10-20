@@ -19,19 +19,24 @@ METRIC_COLUMNS = [
 
 
 def detect_gpu_name() -> str:
-    import subprocess
+    """Return probe text that names the GPU. Empty when every probe misses.
+
+    amd-smi is the ROCm 10 tool. rocm-smi is the older name. A virtual-function
+    MI300X advertises itself as AMD Instinct MI300X VF.
+    """
     for command in (
-        ["amd-smi", "static"],
-        ["/opt/rocm/bin/amd-smi", "static"],
-        ["nvidia-smi", "--query-gpu=name", "--format=csv,noheader"],
+        ["amd-smi", "static", "--asic"],
         ["rocm-smi", "--showproductname"],
+        ["nvidia-smi", "--query-gpu=name", "--format=csv,noheader"],
+        ["rocminfo"],
     ):
         try:
-            completed = subprocess.run(command, check=False, capture_output=True, text=True, timeout=10)
+            completed = subprocess.run(command, check=False, capture_output=True, text=True, timeout=20)
         except (OSError, subprocess.TimeoutExpired):
             continue
         text = (completed.stdout or "") + "\n" + (completed.stderr or "")
-        if text.strip():
+        lowered = text.lower()
+        if any(token in lowered for token in ("mi300", "instinct", "h100", "nvidia")):
             return text
     return ""
 
