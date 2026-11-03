@@ -2,7 +2,7 @@
 
 ## Execution Description
 
-Builds local bin/rochpl (rocHPL) with a hipcc GCC pin, then runs mpirun --allow-run-as-root -np num_gpus bin/rochpl with CLI --N --NB --P --Q --pfact. problem_size_N >=65536 is clamped to 32768. num_iterations is capped by timed_repeats (6 at N>=32768 baseline, 16 extended). Residual Check: PASSED is required. Sweep dimensions: num_gpus, process_grid_P, process_grid_Q, precision, problem_size_N, block_size, panel_factorization, warmup_iters.
+Builds local bin/rochpl (rocHPL) with a hipcc GCC pin, then runs mpirun --allow-run-as-root -np num_gpus bin/rochpl with CLI --N --NB --P --Q --pfact. problem_size_N >=65536 is clamped to 32768. num_iterations is capped by timed_repeats (6 at N>=32768 baseline, 16 extended). Residual Check: PASSED is required. Sweep dimensions: num_gpus, process_grid_P, process_grid_Q, problem_size_N, block_size, panel_factorization, warmup_iters, num_iterations.
 
 ## Parameters
 
@@ -11,7 +11,6 @@ Builds local bin/rochpl (rocHPL) with a hipcc GCC pin, then runs mpirun --allow-
 | num_gpus | `--num-gpus` | smoke=1, baseline=1, extended=1 | 1 | From Parameter list; see Execution Description With Parameters. |
 | process_grid_P | `--process-grid-p` | smoke=1, baseline=1, extended=1 | 1 | From Parameter list; see Execution Description With Parameters. |
 | process_grid_Q | `--process-grid-q` | smoke=1, baseline=1, extended=1 | 1 | From Parameter list; see Execution Description With Parameters. |
-| precision | `--precision` | smoke=fp64, baseline=fp64, extended=fp64 | fp64 | From Parameter list; see Execution Description With Parameters. |
 | problem_size_N | `--problem-size-n` | smoke=4096, baseline=32768, extended=32768 | 32768 | From Parameter list; see Execution Description With Parameters. |
 | block_size | `--block-size` | smoke=256, baseline=384, extended=512 | 384 | From Parameter list; see Execution Description With Parameters. |
 | panel_factorization | `--panel-factorization` | smoke=2, baseline=2, extended=2 | 2 | From Parameter list; see Execution Description With Parameters. |

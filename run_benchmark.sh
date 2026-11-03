@@ -48,7 +48,6 @@ Workload options:
   --num-gpus <value>            Override num_gpus
   --process-grid-P <value>            Override process_grid_P
   --process-grid-Q <value>            Override process_grid_Q
-  --precision <value>            Override precision
   --problem-size-N <value>            Override problem_size_N
   --block-size <value>            Override block_size
   --panel-factorization <value>            Override panel_factorization
@@ -90,7 +89,6 @@ SAVE_OPTIONS_FILE=""
 NUM_GPUS=""
 PROCESS_GRID_P=""
 PROCESS_GRID_Q=""
-PRECISION=""
 PROBLEM_SIZE_N=""
 BLOCK_SIZE=""
 PANEL_FACTORIZATION=""
@@ -119,7 +117,6 @@ while [[ $# -gt 0 ]]; do
     --num-gpus) NUM_GPUS="${2:-}"; shift 2 ;;
     --process-grid-P) PROCESS_GRID_P="${2:-}"; shift 2 ;;
     --process-grid-Q) PROCESS_GRID_Q="${2:-}"; shift 2 ;;
-    --precision) PRECISION="${2:-}"; shift 2 ;;
     --problem-size-N) PROBLEM_SIZE_N="${2:-}"; shift 2 ;;
     --block-size) BLOCK_SIZE="${2:-}"; shift 2 ;;
     --panel-factorization) PANEL_FACTORIZATION="${2:-}"; shift 2 ;;
@@ -166,7 +163,6 @@ PY
 NUM_GPUS="${NUM_GPUS:-$(yaml_get num_gpus)}"
 PROCESS_GRID_P="${PROCESS_GRID_P:-$(yaml_get process_grid_P)}"
 PROCESS_GRID_Q="${PROCESS_GRID_Q:-$(yaml_get process_grid_Q)}"
-PRECISION="${PRECISION:-$(yaml_get precision)}"
 PROBLEM_SIZE_N="${PROBLEM_SIZE_N:-$(yaml_get problem_size_N)}"
 BLOCK_SIZE="${BLOCK_SIZE:-$(yaml_get block_size)}"
 PANEL_FACTORIZATION="${PANEL_FACTORIZATION:-$(yaml_get panel_factorization)}"
@@ -180,7 +176,6 @@ BENCHMARK_RUN_COMMAND="bash run_benchmark.sh --${PROFILE}"
 [[ -n "${NUM_GPUS}" ]] && BENCHMARK_RUN_COMMAND+=" --num-gpus $(printf %q "${NUM_GPUS}")"
 [[ -n "${PROCESS_GRID_P}" ]] && BENCHMARK_RUN_COMMAND+=" --process-grid-P $(printf %q "${PROCESS_GRID_P}")"
 [[ -n "${PROCESS_GRID_Q}" ]] && BENCHMARK_RUN_COMMAND+=" --process-grid-Q $(printf %q "${PROCESS_GRID_Q}")"
-[[ -n "${PRECISION}" ]] && BENCHMARK_RUN_COMMAND+=" --precision $(printf %q "${PRECISION}")"
 [[ -n "${PROBLEM_SIZE_N}" ]] && BENCHMARK_RUN_COMMAND+=" --problem-size-N $(printf %q "${PROBLEM_SIZE_N}")"
 [[ -n "${BLOCK_SIZE}" ]] && BENCHMARK_RUN_COMMAND+=" --block-size $(printf %q "${BLOCK_SIZE}")"
 [[ -n "${PANEL_FACTORIZATION}" ]] && BENCHMARK_RUN_COMMAND+=" --panel-factorization $(printf %q "${PANEL_FACTORIZATION}")"
@@ -231,7 +226,6 @@ run_collection() {
   grep -q -- '--num-gpus' <<<"${help}" && collect_args+=(--num-gpus "${NUM_GPUS}")
   grep -q -- '--process-grid-P' <<<"${help}" && collect_args+=(--process-grid-P "${PROCESS_GRID_P}")
   grep -q -- '--process-grid-Q' <<<"${help}" && collect_args+=(--process-grid-Q "${PROCESS_GRID_Q}")
-  grep -q -- '--precision' <<<"${help}" && collect_args+=(--precision "${PRECISION}")
   grep -q -- '--problem-size-N' <<<"${help}" && collect_args+=(--problem-size-N "${PROBLEM_SIZE_N}")
   grep -q -- '--block-size' <<<"${help}" && collect_args+=(--block-size "${BLOCK_SIZE}")
   grep -q -- '--panel-factorization' <<<"${help}" && collect_args+=(--panel-factorization "${PANEL_FACTORIZATION}")

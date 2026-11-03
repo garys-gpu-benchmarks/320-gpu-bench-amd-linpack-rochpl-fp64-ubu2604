@@ -11,7 +11,6 @@ sweep:
   num_gpus: 1
   process_grid_P: 1
   process_grid_Q: 1
-  precision: fp64
   problem_size_N:
     smoke: 4096
     baseline: 32768
