@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # File: run_benchmark.sh
-# Description: Builds local bin/rochpl (rocHPL) with a hipcc GCC pin, then runs mpirun --allow-run-as-root -np num_gpus bin/rochpl with CLI --N --NB --P --Q --pfact.
+# Description: Builds local bin/rochpl (rocHPL) with a hipcc GCC pin, then runs mpirun --allow-run-as-root -np 1 bin/rochpl --N.
 # Execution: bash run_benchmark.sh [--profile smoke|baseline|extended] [--validate]
 # Options: --profile, --smoke, --baseline, --extended, --device, --phase, --raw-file, --config, --validate, --help
 # Requirements: bash, python3, repository-local .venv
@@ -18,7 +18,7 @@ usage() {
   cat <<'USAGE'
 Usage: bash run_benchmark.sh [OPTIONS]
 
-Builds local bin/rochpl (rocHPL) with a hipcc GCC pin, then runs mpirun --allow-run-as-root -np num_gpus bin/rochpl with CLI --N --NB --P --Q --pfact.
+Builds local bin/rochpl (rocHPL) with a hipcc GCC pin, then runs mpirun --allow-run-as-root -np 1 bin/rochpl --N.
 
 Profiles:
   --profile <name>              Run profile: smoke|baseline|extended (default: smoke)
@@ -45,12 +45,7 @@ Validation and logging:
   --save-options-file <path>    Write resolved CLI options to PATH
 
 Workload options:
-  --num-gpus <value>            Override num_gpus
-  --process-grid-P <value>            Override process_grid_P
-  --process-grid-Q <value>            Override process_grid_Q
   --problem-size-N <value>            Override problem_size_N
-  --block-size <value>            Override block_size
-  --panel-factorization <value>            Override panel_factorization
   --warmup-iters <value>            Override warmup_iters
   --num-iterations <value>            Override num_iterations
 
@@ -86,12 +81,7 @@ QUIET=0
 LOG_LEVEL_VALUE="INFO"
 OUTPUT_FORMAT=""
 SAVE_OPTIONS_FILE=""
-NUM_GPUS=""
-PROCESS_GRID_P=""
-PROCESS_GRID_Q=""
 PROBLEM_SIZE_N=""
-BLOCK_SIZE=""
-PANEL_FACTORIZATION=""
 WARMUP_ITERS=""
 NUM_ITERATIONS=""
 
@@ -114,12 +104,7 @@ while [[ $# -gt 0 ]]; do
     --log-level) LOG_LEVEL_VALUE="${2:-}"; shift 2 ;;
     --output-format) OUTPUT_FORMAT="${2:-}"; shift 2 ;;
     --save-options-file) SAVE_OPTIONS_FILE="${2:-}"; shift 2 ;;
-    --num-gpus) NUM_GPUS="${2:-}"; shift 2 ;;
-    --process-grid-P) PROCESS_GRID_P="${2:-}"; shift 2 ;;
-    --process-grid-Q) PROCESS_GRID_Q="${2:-}"; shift 2 ;;
     --problem-size-N) PROBLEM_SIZE_N="${2:-}"; shift 2 ;;
-    --block-size) BLOCK_SIZE="${2:-}"; shift 2 ;;
-    --panel-factorization) PANEL_FACTORIZATION="${2:-}"; shift 2 ;;
     --warmup-iters) WARMUP_ITERS="${2:-}"; shift 2 ;;
     --num-iterations) NUM_ITERATIONS="${2:-}"; shift 2 ;;
     --help|--specification|--matrix-definition) shift ;;
@@ -160,12 +145,7 @@ print("" if raw_value is None else raw_value)
 PY
 }
 
-NUM_GPUS="${NUM_GPUS:-$(yaml_get num_gpus)}"
-PROCESS_GRID_P="${PROCESS_GRID_P:-$(yaml_get process_grid_P)}"
-PROCESS_GRID_Q="${PROCESS_GRID_Q:-$(yaml_get process_grid_Q)}"
 PROBLEM_SIZE_N="${PROBLEM_SIZE_N:-$(yaml_get problem_size_N)}"
-BLOCK_SIZE="${BLOCK_SIZE:-$(yaml_get block_size)}"
-PANEL_FACTORIZATION="${PANEL_FACTORIZATION:-$(yaml_get panel_factorization)}"
 WARMUP_ITERS="${WARMUP_ITERS:-$(yaml_get warmup_iters)}"
 NUM_ITERATIONS="${NUM_ITERATIONS:-$(yaml_get num_iterations)}"
 OUTPUT_FORMAT="${OUTPUT_FORMAT:-$(yaml_get output_format)}"
@@ -173,12 +153,7 @@ OUTPUT_FORMAT="${OUTPUT_FORMAT:-csv}"
 
 BENCHMARK_RUN_COMMAND="bash run_benchmark.sh --${PROFILE}"
 [[ "${VALIDATE}" -eq 1 ]] && BENCHMARK_RUN_COMMAND+=" --validate"
-[[ -n "${NUM_GPUS}" ]] && BENCHMARK_RUN_COMMAND+=" --num-gpus $(printf %q "${NUM_GPUS}")"
-[[ -n "${PROCESS_GRID_P}" ]] && BENCHMARK_RUN_COMMAND+=" --process-grid-P $(printf %q "${PROCESS_GRID_P}")"
-[[ -n "${PROCESS_GRID_Q}" ]] && BENCHMARK_RUN_COMMAND+=" --process-grid-Q $(printf %q "${PROCESS_GRID_Q}")"
 [[ -n "${PROBLEM_SIZE_N}" ]] && BENCHMARK_RUN_COMMAND+=" --problem-size-N $(printf %q "${PROBLEM_SIZE_N}")"
-[[ -n "${BLOCK_SIZE}" ]] && BENCHMARK_RUN_COMMAND+=" --block-size $(printf %q "${BLOCK_SIZE}")"
-[[ -n "${PANEL_FACTORIZATION}" ]] && BENCHMARK_RUN_COMMAND+=" --panel-factorization $(printf %q "${PANEL_FACTORIZATION}")"
 [[ -n "${WARMUP_ITERS}" ]] && BENCHMARK_RUN_COMMAND+=" --warmup-iters $(printf %q "${WARMUP_ITERS}")"
 [[ -n "${NUM_ITERATIONS}" ]] && BENCHMARK_RUN_COMMAND+=" --num-iterations $(printf %q "${NUM_ITERATIONS}")"
 set_benchmark_run_command "${BENCHMARK_RUN_COMMAND}"
@@ -223,12 +198,7 @@ run_collection() {
     collect_args+=(--device-id "${DEVICE_ID:-0}")
   fi
   grep -q -- '--output-format' <<<"${help}" && collect_args+=(--output-format "${OUTPUT_FORMAT}")
-  grep -q -- '--num-gpus' <<<"${help}" && collect_args+=(--num-gpus "${NUM_GPUS}")
-  grep -q -- '--process-grid-P' <<<"${help}" && collect_args+=(--process-grid-P "${PROCESS_GRID_P}")
-  grep -q -- '--process-grid-Q' <<<"${help}" && collect_args+=(--process-grid-Q "${PROCESS_GRID_Q}")
   grep -q -- '--problem-size-N' <<<"${help}" && collect_args+=(--problem-size-N "${PROBLEM_SIZE_N}")
-  grep -q -- '--block-size' <<<"${help}" && collect_args+=(--block-size "${BLOCK_SIZE}")
-  grep -q -- '--panel-factorization' <<<"${help}" && collect_args+=(--panel-factorization "${PANEL_FACTORIZATION}")
   grep -q -- '--warmup-iters' <<<"${help}" && collect_args+=(--warmup-iters "${WARMUP_ITERS}")
   grep -q -- '--num-iterations' <<<"${help}" && collect_args+=(--num-iterations "${NUM_ITERATIONS}")
 

@@ -8,18 +8,10 @@
 # Add thresholds: or baselines: from hardware_profile.mi300x.yaml and Workload Type.
 sweep:
   profile: smoke
-  num_gpus: 1
-  process_grid_P: 1
-  process_grid_Q: 1
   problem_size_N:
     smoke: 4096
     baseline: 32768
     extended: 32768
-  block_size:
-    smoke: 256
-    baseline: 384
-    extended: 512
-  panel_factorization: 2
   warmup_iters: 0
   num_iterations:
     smoke: 1

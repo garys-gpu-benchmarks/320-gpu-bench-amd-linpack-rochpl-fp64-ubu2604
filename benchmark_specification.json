@@ -25,6 +25,11 @@
     "value": "gpu-bench-amd-linpack-rochpl-fp64-ubu2604"
   },
   {
+    "field_name": "Repo Directory Name",
+    "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
+    "value": "320-gpu-bench-amd-linpack-rochpl-fp64-ubu2604"
+  },
+  {
     "field_name": "Main Goal",
     "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
     "value": "Measure sustained FP64 Linpack performance via rocHPL"
@@ -42,7 +47,7 @@
   {
     "field_name": "Command Tools Executed",
     "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
-    "value": "Build scripts/build.sh under hipcc_host_gcc.sh; run mpirun bin/rochpl with CLI --N --NB --P --Q --pfact. HPL.dat is present but is not the control path"
+    "value": "Build scripts/build.sh under hipcc_host_gcc.sh; run mpirun -np 1 bin/rochpl --N. HPL.dat is present but is not the control path"
   },
   {
     "field_name": "Command Execution Details and Purpose",
@@ -52,12 +57,12 @@
   {
     "field_name": "Command Methodology",
     "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
-    "value": "Run local FP64 rocHPL (mpirun bin/rochpl) with yaml problem_size_N (smoke 4096, baseline/extended 32768; >=65536 clamped to 32768), block_size, and process grid as CLI flags, repeat solves per timed_repeats, then parse Final Score GFLOPS, time-to-solution, and Residual Check. This is Linpack via rocHPL"
+    "value": "Run local FP64 rocHPL (mpirun bin/rochpl) with yaml problem_size_N (smoke 4096, baseline/extended 32768; >=65536 clamped to 32768) on one GPU (rocSOLVER chooses its own blocking), repeat solves per timed_repeats, then parse Final Score GFLOPS, time-to-solution, and Residual Check. This is Linpack via rocHPL"
   },
   {
     "field_name": "Execution Description With Parameters",
     "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
-    "value": "Builds local bin/rochpl (rocHPL) with a hipcc GCC pin, then runs mpirun --allow-run-as-root -np num_gpus bin/rochpl with CLI --N --NB --P --Q --pfact. problem_size_N >=65536 is clamped to 32768. num_iterations is capped by timed_repeats (6 at N>=32768 baseline, 16 extended). Residual Check: PASSED is required. Placeholder HPL.dat is rewritten in place and does not drive N/NB/P/Q. The binary is single-GPU rocSOLVER dgetrf and dgetrs at one N. output_format: csv"
+    "value": "Builds local bin/rochpl (rocHPL) with a hipcc GCC pin, then runs mpirun --allow-run-as-root -np 1 bin/rochpl --N. problem_size_N >=65536 is clamped to 32768. num_iterations is capped by timed_repeats (6 at N>=32768 baseline, 16 extended). Residual Check: PASSED is required. Placeholder HPL.dat is rewritten in place and does not drive the run. The binary is single-GPU rocSOLVER dgetrf and dgetrs at one N; rocSOLVER picks its own block size and factorization, so there is no num_gpus, process grid, block_size or panel_factorization parameter. output_format: csv"
   },
   {
     "field_name": "Execution Domain",
@@ -102,17 +107,17 @@
   {
     "field_name": "run_benchmark Command Plus Options for Smoke Run",
     "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
-    "value": "bash run_benchmark.sh --smoke --validate --num-gpus 1 --process-grid-P 1 --process-grid-Q 1 --problem-size-N 4096 --block-size 256 --panel-factorization 2 --warmup-iters 0 --num-iterations 1"
+    "value": "bash run_benchmark.sh --smoke --validate --problem-size-N 4096 --warmup-iters 0 --num-iterations 1"
   },
   {
     "field_name": "run_benchmark Command Plus Options for Baseline Run",
     "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
-    "value": "bash run_benchmark.sh --baseline --validate --num-gpus 1 --process-grid-P 1 --process-grid-Q 1 --problem-size-N 32768 --block-size 384 --panel-factorization 2 --warmup-iters 0 --num-iterations 5"
+    "value": "bash run_benchmark.sh --baseline --validate --problem-size-N 32768 --warmup-iters 0 --num-iterations 5"
   },
   {
     "field_name": "run_benchmark Command Plus Options for Extended Run",
     "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
-    "value": "bash run_benchmark.sh --extended --validate --num-gpus 1 --process-grid-P 1 --process-grid-Q 1 --problem-size-N 32768 --block-size 512 --panel-factorization 2 --warmup-iters 0 --num-iterations 16"
+    "value": "bash run_benchmark.sh --extended --validate --problem-size-N 32768 --warmup-iters 0 --num-iterations 16"
   },
   {
     "field_name": "Output Fields / Metrics to Parse",
@@ -222,47 +227,47 @@
   {
     "field_name": "Known Runtime Constraints (<=35 Words Each)",
     "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
-    "value": "P times Q must equal num_gpus. Large N needs high HBM. Residual FAILED aborts. N>=65536 is clamped to 32768"
+    "value": "Single GPU only. Large N needs high HBM. Residual FAILED aborts. N>=65536 is clamped to 32768"
   },
   {
     "field_name": "Parameter_01",
     "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
-    "value": "num_gpus"
+    "value": "problem_size_N"
   },
   {
     "field_name": "Parameter_02",
     "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
-    "value": "process_grid_P"
+    "value": "warmup_iters"
   },
   {
     "field_name": "Parameter_03",
     "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
-    "value": "process_grid_Q"
+    "value": "num_iterations"
   },
   {
     "field_name": "Parameter_04",
     "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
-    "value": "problem_size_N"
+    "value": "-"
   },
   {
     "field_name": "Parameter_05",
     "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
-    "value": "block_size"
+    "value": "-"
   },
   {
     "field_name": "Parameter_06",
     "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
-    "value": "panel_factorization"
+    "value": "-"
   },
   {
     "field_name": "Parameter_07",
     "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
-    "value": "warmup_iters"
+    "value": "-"
   },
   {
     "field_name": "Parameter_08",
     "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
-    "value": "num_iterations"
+    "value": "-"
   },
   {
     "field_name": "Parameter_09",
@@ -372,7 +377,7 @@
   {
     "field_name": "Workload Command Line Executable",
     "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
-    "value": "Build scripts/build.sh under hipcc_host_gcc.sh; run mpirun bin/rochpl with CLI --N --NB --P --Q --pfact. HPL.dat is present but is not the control path"
+    "value": "Build scripts/build.sh under hipcc_host_gcc.sh; run mpirun -np 1 bin/rochpl --N. HPL.dat is present but is not the control path"
   },
   {
     "field_name": "ROCm Version",
@@ -407,7 +412,7 @@
   {
     "field_name": "Profile Parameter Values",
     "source_file": "BenchmarkSpecDefinitions.xlsx::Parameters_SmokeBaselineExtend",
-    "value": "{\"num_gpus\": {\"smoke\": \"1\", \"baseline\": \"1\", \"extended\": \"1\", \"notes\": \"\"}, \"process_grid_P\": {\"smoke\": \"1\", \"baseline\": \"1\", \"extended\": \"1\", \"notes\": \"\"}, \"process_grid_Q\": {\"smoke\": \"1\", \"baseline\": \"1\", \"extended\": \"1\", \"notes\": \"\"}, \"problem_size_N\": {\"smoke\": \"4096\", \"baseline\": \"32768\", \"extended\": \"32768\", \"notes\": \"2026-09-06: AMD Ubuntu 26.04 sibling of 120. Same standardized extended=32768 (hang risk at N=65536).\"}, \"block_size\": {\"smoke\": \"256\", \"baseline\": \"384\", \"extended\": \"512\", \"notes\": \"\"}, \"panel_factorization\": {\"smoke\": \"2\", \"baseline\": \"2\", \"extended\": \"2\", \"notes\": \"\"}, \"warmup_iters\": {\"smoke\": \"0\", \"baseline\": \"0\", \"extended\": \"0\", \"notes\": \"\"}, \"num_iterations\": {\"smoke\": \"1\", \"baseline\": \"5\", \"extended\": \"16\", \"notes\": \"2026-09-06: AMD Ubuntu 26.04 sibling of 120. Same standardized num_iterations baseline=6/extended=16. | 2026-10-19 GARY_LEDGER (runtime_ledger_Aggregate_375_376_377_378_20261019a_845am; targets baseline under 5 min, extended under 15 min): baseline 6 measured 5:05/4:25 (slower run); fixed start ~3s from smoke; 6 -> 5, predicted ~4:14. Unconfirmed by a fresh run.\"}}"
+    "value": "{\"problem_size_N\": {\"smoke\": \"4096\", \"baseline\": \"32768\", \"extended\": \"32768\", \"notes\": \"2026-09-06: AMD Ubuntu 26.04 sibling of 120. Same standardized extended=32768 (hang risk at N=65536).\"}, \"warmup_iters\": {\"smoke\": \"0\", \"baseline\": \"0\", \"extended\": \"0\", \"notes\": \"\"}, \"num_iterations\": {\"smoke\": \"1\", \"baseline\": \"5\", \"extended\": \"16\", \"notes\": \"2026-09-06: AMD Ubuntu 26.04 sibling of 120. Same standardized num_iterations baseline=6/extended=16. | 2026-10-19 GARY_LEDGER (runtime_ledger_Aggregate_375_376_377_378_20261019a_845am; targets baseline under 5 min, extended under 15 min): baseline 6 measured 5:05/4:25 (slower run); fixed start ~3s from smoke; 6 -> 5, predicted ~4:14. Unconfirmed by a fresh run.\"}}"
   },
   {
     "field_name": "Profile Command Authorship",

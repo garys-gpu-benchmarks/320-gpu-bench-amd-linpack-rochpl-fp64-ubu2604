@@ -2,25 +2,20 @@
 
 ## Execution Description
 
-Builds local bin/rochpl (rocHPL) with a hipcc GCC pin, then runs mpirun --allow-run-as-root -np num_gpus bin/rochpl with CLI --N --NB --P --Q --pfact. problem_size_N >=65536 is clamped to 32768. num_iterations is capped by timed_repeats (6 at N>=32768 baseline, 16 extended). Residual Check: PASSED is required. Sweep dimensions: num_gpus, process_grid_P, process_grid_Q, problem_size_N, block_size, panel_factorization, warmup_iters, num_iterations.
+Builds local bin/rochpl (rocHPL) with a hipcc GCC pin, then runs mpirun --allow-run-as-root -np 1 bin/rochpl --N. problem_size_N >=65536 is clamped to 32768. num_iterations is capped by timed_repeats (6 at N>=32768 baseline, 16 extended). Residual Check: PASSED is required. Sweep dimensions: problem_size_N, warmup_iters, num_iterations.
 
 ## Parameters
 
 | Parameter | CLI Flag | Tested Values | Default | Description |
 | --- | --- | --- | --- | --- |
-| num_gpus | `--num-gpus` | smoke=1, baseline=1, extended=1 | 1 | From Parameter list; see Execution Description With Parameters. |
-| process_grid_P | `--process-grid-p` | smoke=1, baseline=1, extended=1 | 1 | From Parameter list; see Execution Description With Parameters. |
-| process_grid_Q | `--process-grid-q` | smoke=1, baseline=1, extended=1 | 1 | From Parameter list; see Execution Description With Parameters. |
 | problem_size_N | `--problem-size-n` | smoke=4096, baseline=32768, extended=32768 | 32768 | From Parameter list; see Execution Description With Parameters. |
-| block_size | `--block-size` | smoke=256, baseline=384, extended=512 | 384 | From Parameter list; see Execution Description With Parameters. |
-| panel_factorization | `--panel-factorization` | smoke=2, baseline=2, extended=2 | 2 | From Parameter list; see Execution Description With Parameters. |
 | warmup_iters | `--warmup-iters` | smoke=0, baseline=0, extended=0 | 0 | From Parameter list; see Execution Description With Parameters. |
 | num_iterations | `--num-iterations` | smoke=1, baseline=5, extended=16 | 5 | From Parameter list; see Execution Description With Parameters. |
 
 ## Invocation
 
 ```bash
-Build scripts/build.sh under hipcc_host_gcc.sh; run mpirun bin/rochpl with CLI --N --NB --P --Q --pfact. HPL.dat is present but is not the control path
+Build scripts/build.sh under hipcc_host_gcc.sh; run mpirun -np 1 bin/rochpl --N. HPL.dat is present but is not the control path
 ```
 
 ## Raw Output Format
@@ -38,7 +33,7 @@ sample_index,status,sustained_fp64_performance_across_problem_size_n_tflops,perc
 
 ## Framework
 
-Builds local bin/rochpl (rocHPL) with a hipcc GCC pin, then runs mpirun --allow-run-as-root -np num_gpus bin/rochpl with CLI --N --NB --P --Q --pfact. problem_size_N >=65536 is clamped to 32768. num_iterations is capped by timed_repeats (6 at N>=32768 baseline, 16 extended).
+Builds local bin/rochpl (rocHPL) with a hipcc GCC pin, then runs mpirun --allow-run-as-root -np 1 bin/rochpl --N. problem_size_N >=65536 is clamped to 32768. num_iterations is capped by timed_repeats (6 at N>=32768 baseline, 16 extended).
 
 ## Installation and Execution Summary
 
@@ -47,7 +42,7 @@ Build and run local bin/rochpl under mpirun --allow-run-as-root for yaml warmup 
 ## Platform Portability
 
 - **AMD (primary):** ```bash
-Build scripts/build.sh under hipcc_host_gcc.sh; run mpirun bin/rochpl with CLI --N --NB --P --Q --pfact. HPL.dat is present but is not the control path
+Build scripts/build.sh under hipcc_host_gcc.sh; run mpirun -np 1 bin/rochpl --N. HPL.dat is present but is not the control path
 ```
 - **NVIDIA:** Primary target is AMD ROCm. NVIDIA notes in this section are reference only and are not the execution path.
 
@@ -98,10 +93,10 @@ bash run_benchmark.sh --profile extended --validate
 2. `run.error_message` is NULL.
 3. `started_at` and `finished_at` are valid ISO-8601 UTC strings.
 4. All required aggregate metrics in `runs` are non-NULL and finite.
-5. All required aggregate metrics are physically sensible (positive values). Builds local bin/rochpl (rocHPL) with a hipcc GCC pin, then runs mpirun --allow-run-as-root -np num_gpus bin/rochpl with CLI --N --NB --P --Q --pfact. problem_size_N >=65536 is clamped to 32768. num_iterations is capped by timed_repeats (6 at N>=32768 baseline, 16 extended).
+5. All required aggregate metrics are physically sensible (positive values). Builds local bin/rochpl (rocHPL) with a hipcc GCC pin, then runs mpirun --allow-run-as-root -np 1 bin/rochpl --N. problem_size_N >=65536 is clamped to 32768. num_iterations is capped by timed_repeats (6 at N>=32768 baseline, 16 extended).
 6. At least 2 sample rows exist for the latest `run_id` (sweep coverage).
 7. No sample has `status = 'error'`.
-8. Builds local bin/rochpl (rocHPL) with a hipcc GCC pin, then runs mpirun --allow-run-as-root -np num_gpus bin/rochpl with CLI --N --NB --P --Q --pfact. problem_size_N >=65536 is clamped to 32768. num_iterations is capped by timed_repeats (6 at N>=32768 baseline, 16 extended).
+8. Builds local bin/rochpl (rocHPL) with a hipcc GCC pin, then runs mpirun --allow-run-as-root -np 1 bin/rochpl --N. problem_size_N >=65536 is clamped to 32768. num_iterations is capped by timed_repeats (6 at N>=32768 baseline, 16 extended).
 
 ### Baseline / Threshold configuration (`config/benchmark_config.yaml`)
 
