@@ -3,7 +3,7 @@
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![CI](https://github.com/garys-gpu-benchmarks/320-gpu-bench-amd-linpack-rochpl-fp64-ubu2604/actions/workflows/ci.yml/badge.svg)](https://github.com/garys-gpu-benchmarks/320-gpu-bench-amd-linpack-rochpl-fp64-ubu2604/actions/workflows/ci.yml)
 
-Measures sustained FP64 Linpack performance via rocHPL. Workload 320 of the AMD Ubuntu 26.04 bundle.
+Measures sustained FP64 Linpack performance via rocSOLVER LU. Workload 320 of the AMD Ubuntu 26.04 bundle.
 
 ## Quick Start
 
@@ -55,7 +55,7 @@ Profile values live in `config/benchmark_config.yaml`.
 
 | Path | Contents |
 |---|---|
-| `results/raw/<timestamp>_<repo>_<host>/` | Raw tool output, `metrics_summary.txt`, and `hardware_info.txt`, `software_info.txt`, `errors_info.txt` |
+| `results/raw/YYYYMMDD_HHMMSSZ_WORKLOAD-<NNN>_SYSTEM-<hostname>/` | Raw tool output, `metrics_summary.txt`, and `hardware_info.txt`, `software_info.txt`, `errors_info.txt` |
 | `results/benchmark.db` | SQLite history of every run |
 | `results/summary.json` | Metrics from the most recent run |
 | `/var/opt/benchmarks/runtime_ledger.csv` | One row per run, shared by every workload on the host |

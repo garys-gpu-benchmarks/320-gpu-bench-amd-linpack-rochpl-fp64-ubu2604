@@ -18,10 +18,10 @@ rocHPL FP64 (High Performance Linpack)
 Build and run local bin/rochpl under mpirun --allow-run-as-root for yaml warmup plus timed repeats, parse GFLOPS, time-to-solution, and Residual Check, and abort if Residual Check is not PASSED, to measure sustained FP64 Linpack. Clamp problem_size_N from >=65536 to 32768
 
 ## Main Goal
-Measure sustained FP64 Linpack performance via rocHPL
+Measure sustained FP64 Linpack performance via rocSOLVER LU
 
 ## Validation Objective
-Validates rocHPL GFLOPS, time-to-solution, and Residual Check: PASSED. Residual FAILED aborts
+Validates rocSOLVER LU Linpack TFLOPS, time-to-solution, and Residual Check: PASSED
 
 ## Workload Category
 Compute & Math Kernels
