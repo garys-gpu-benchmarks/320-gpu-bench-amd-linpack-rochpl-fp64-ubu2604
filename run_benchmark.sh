@@ -16,12 +16,11 @@ capture_benchmark_run_command_submitted "$@"
 
 usage() {
   cat <<'USAGE'
+
 Usage: bash run_benchmark.sh [OPTIONS]
 
 Workload Name:          rocHPL FP64 (High Performance Linpack).
 Main Goal:              Measure sustained FP64 Linpack performance via rocSOLVER LU.
-Validation Objective:   Validates rocSOLVER LU Linpack TFLOPS, time-to-solution, and Residual Check:
-                        PASSED.
 Command Tools Executed: Build src/rochpl.cpp (rocSOLVER LU) with scripts/build.sh, then run mpirun
                         -np 1 bin/rochpl --N.
 
