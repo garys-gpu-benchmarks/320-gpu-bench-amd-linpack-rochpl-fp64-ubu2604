@@ -30,8 +30,11 @@ Profiles (default: --smoke):
   --extended                    Run extended profile
 
 Parameters (override the profile's value):
-  --problem-size-N <value>      Shared workload parameter (smoke 4096, baseline 32768, extended 32768)
-  --warmup-iters <n>            Untimed warm-up repetitions before measurement (smoke/baseline/extended: 0)
+  --problem-size-N <value>      Shared workload parameter
+                                  smoke:             4096
+                                  baseline/extended: 32768
+  --warmup-iters <n>            Untimed warm-up repetitions before measurement
+                                  all profiles: 0
   --num-iterations <n>          Number of timed repetitions (smoke 1, baseline 5, extended 16)
 
 General options:
