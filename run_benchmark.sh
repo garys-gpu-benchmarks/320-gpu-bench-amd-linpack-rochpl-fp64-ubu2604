@@ -19,10 +19,10 @@ usage() {
 
 Usage: bash run_benchmark.sh [OPTIONS]
 
-Workload Name:          rocHPL FP64 (High Performance Linpack).
-Main Goal:              Measure sustained FP64 Linpack performance via rocSOLVER LU.
+Workload Name:          rocHPL FP64 (High Performance Linpack)
+Main Goal:              Measure sustained FP64 Linpack performance via rocSOLVER LU
 Command Tools Executed: Build src/rochpl.cpp (rocSOLVER LU) with scripts/build.sh, then run mpirun
-                        -np 1 bin/rochpl --N.
+                        -np 1 bin/rochpl --N
 
 Profiles (default: --smoke):
   --smoke                       Run smoke profile

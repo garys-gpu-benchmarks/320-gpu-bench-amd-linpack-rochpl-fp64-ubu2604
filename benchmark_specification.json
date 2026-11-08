@@ -205,14 +205,14 @@
     "value": "MI300X"
   },
   {
-    "field_name": "Raw Output Format",
-    "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
-    "value": "Local bin/rochpl stdout plus a normalized CSV aggregate"
-  },
-  {
     "field_name": "Primary Record Granularity",
     "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
     "value": "one result row for the single problem size. A lone row is duplicated to two samples"
+  },
+  {
+    "field_name": "Raw Output Format",
+    "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
+    "value": "Local bin/rochpl stdout plus a normalized CSV aggregate"
   },
   {
     "field_name": "Raw Output Example",
@@ -225,14 +225,14 @@
     "value": "sustained_fp64_performance_across_problem_size_n_tflops, time_to_solution_across_problem_size_n_s, percent_of_gpu_fp64_matrix_peak"
   },
   {
-    "field_name": "Success Criteria",
-    "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
-    "value": "Residual Check: PASSED and finite TFLOPS/time parse"
-  },
-  {
     "field_name": "Parser and Normalization Notes",
     "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
     "value": "Peak percent uses hardcoded 163.4 TFLOPS. N>=65536 is clamped to 32768. Solve timeout is 180 s for N>=32768"
+  },
+  {
+    "field_name": "Success Criteria",
+    "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
+    "value": "Residual Check: PASSED and finite TFLOPS/time parse"
   },
   {
     "field_name": "Hardware Config",
