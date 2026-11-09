@@ -2,7 +2,7 @@
 
 ## Execution Description
 
-Builds local bin/rochpl (rocSOLVER LU Linpack) with a hipcc GCC pin, then runs mpirun --allow-run-as-root -np 1 bin/rochpl --N. problem_size_N >=65536 is clamped to 32768. num_iterations is capped by timed_repeats (6 at N>=32768 baseline, 16 extended). Residual Check: PASSED is required. Sweep dimensions: problem_size_N, warmup_iters, num_iterations.
+Builds local bin/rochpl (rocSOLVER dense LU) with a hipcc GCC pin, then runs mpirun --allow-run-as-root -np 1 bin/rochpl --N. problem_size_N >=65536 is clamped to 32768. num_iterations is capped by timed_repeats (6 at N>=32768 baseline, 16 extended). Residual Check: PASSED is required. Sweep dimensions: problem_size_N, warmup_iters, num_iterations.
 
 ## Parameters
 
@@ -33,11 +33,11 @@ sample_index,status,sustained_fp64_performance_across_problem_size_n_tflops,perc
 
 ## Framework
 
-Builds local bin/rochpl (rocSOLVER LU Linpack) with a hipcc GCC pin, then runs mpirun --allow-run-as-root -np 1 bin/rochpl --N. problem_size_N >=65536 is clamped to 32768. num_iterations is capped by timed_repeats (6 at N>=32768 baseline, 16 extended).
+Builds local bin/rochpl (rocSOLVER dense LU) with a hipcc GCC pin, then runs mpirun --allow-run-as-root -np 1 bin/rochpl --N. problem_size_N >=65536 is clamped to 32768. num_iterations is capped by timed_repeats (6 at N>=32768 baseline, 16 extended).
 
 ## Installation and Execution Summary
 
-Build and run local bin/rochpl under mpirun --allow-run-as-root for yaml warmup plus timed repeats, parse GFLOPS, time-to-solution, and Residual Check, and abort if Residual Check is not PASSED, to measure sustained FP64 Linpack. Clamp problem_size_N from >=65536 to 32768
+Build and run local bin/rochpl under mpirun --allow-run-as-root for yaml warmup plus timed repeats, parse GFLOPS, time-to-solution, and Residual Check, and abort if Residual Check is not PASSED, to measure sustained FP64 dense LU. Clamp problem_size_N from >=65536 to 32768
 
 ## Platform Portability
 
@@ -93,10 +93,10 @@ bash run_benchmark.sh --extended
 2. `run.error_message` is NULL.
 3. `started_at` and `finished_at` are valid ISO-8601 UTC strings.
 4. All required aggregate metrics in `runs` are non-NULL and finite.
-5. All required aggregate metrics are physically sensible (positive values). Builds local bin/rochpl (rocSOLVER LU Linpack) with a hipcc GCC pin, then runs mpirun --allow-run-as-root -np 1 bin/rochpl --N. problem_size_N >=65536 is clamped to 32768. num_iterations is capped by timed_repeats (6 at N>=32768 baseline, 16 extended).
+5. All required aggregate metrics are physically sensible (positive values). Builds local bin/rochpl (rocSOLVER dense LU) with a hipcc GCC pin, then runs mpirun --allow-run-as-root -np 1 bin/rochpl --N. problem_size_N >=65536 is clamped to 32768. num_iterations is capped by timed_repeats (6 at N>=32768 baseline, 16 extended).
 6. At least 2 sample rows exist for the latest `run_id` (sweep coverage).
 7. No sample has `status = 'error'`.
-8. Builds local bin/rochpl (rocSOLVER LU Linpack) with a hipcc GCC pin, then runs mpirun --allow-run-as-root -np 1 bin/rochpl --N. problem_size_N >=65536 is clamped to 32768. num_iterations is capped by timed_repeats (6 at N>=32768 baseline, 16 extended).
+8. Builds local bin/rochpl (rocSOLVER dense LU) with a hipcc GCC pin, then runs mpirun --allow-run-as-root -np 1 bin/rochpl --N. problem_size_N >=65536 is clamped to 32768. num_iterations is capped by timed_repeats (6 at N>=32768 baseline, 16 extended).
 
 ### Baseline / Threshold configuration (`config/benchmark_config.yaml`)
 

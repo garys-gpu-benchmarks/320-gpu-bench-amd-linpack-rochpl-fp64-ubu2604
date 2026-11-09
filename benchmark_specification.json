@@ -7,7 +7,7 @@
   {
     "field_name": "Workload Name",
     "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
-    "value": "rocHPL FP64 (High Performance Linpack)"
+    "value": "rocSOLVER FP64 Dense LU Solve (single GPU)"
   },
   {
     "field_name": "GPU Vendor",
@@ -32,7 +32,7 @@
   {
     "field_name": "Main Goal",
     "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
-    "value": "Measure sustained FP64 Linpack performance via rocSOLVER LU"
+    "value": "Measure sustained FP64 dense LU solve (getrf + getrs) throughput with rocSOLVER on one GPU"
   },
   {
     "field_name": "Command Tools Executed",
@@ -162,22 +162,22 @@
   {
     "field_name": "Validation Objective",
     "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
-    "value": "Validates rocSOLVER LU Linpack TFLOPS, time-to-solution, and Residual Check: PASSED"
+    "value": "Validates rocSOLVER dense LU TFLOPS, time-to-solution, and Residual Check: PASSED"
   },
   {
     "field_name": "Command Execution Details and Purpose",
     "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
-    "value": "Build and run local bin/rochpl under mpirun --allow-run-as-root for yaml warmup plus timed repeats, parse GFLOPS, time-to-solution, and Residual Check, and abort if Residual Check is not PASSED, to measure sustained FP64 Linpack. Clamp problem_size_N from >=65536 to 32768"
+    "value": "Build and run local bin/rochpl under mpirun --allow-run-as-root for yaml warmup plus timed repeats, parse GFLOPS, time-to-solution, and Residual Check, and abort if Residual Check is not PASSED, to measure sustained FP64 dense LU. Clamp problem_size_N from >=65536 to 32768"
   },
   {
     "field_name": "Command Methodology",
     "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
-    "value": "Run local FP64 rocSOLVER LU Linpack (mpirun bin/rochpl) with yaml problem_size_N (smoke 4096, baseline/extended 32768; >=65536 clamped to 32768) on one GPU (rocSOLVER chooses its own blocking), repeat solves per timed_repeats, then parse Final Score GFLOPS, time-to-solution, and Residual Check"
+    "value": "Run local FP64 rocSOLVER dense LU (mpirun bin/rochpl) with yaml problem_size_N (smoke 4096, baseline/extended 32768; >=65536 clamped to 32768) on one GPU (rocSOLVER chooses its own blocking), repeat solves per timed_repeats, then parse Final Score GFLOPS, time-to-solution, and Residual Check"
   },
   {
     "field_name": "Execution Description With Parameters",
     "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
-    "value": "Builds local bin/rochpl (rocSOLVER LU Linpack) with a hipcc GCC pin, then runs mpirun --allow-run-as-root -np 1 bin/rochpl --N. problem_size_N >=65536 is clamped to 32768. num_iterations is capped by timed_repeats (6 at N>=32768 baseline, 16 extended). Residual Check: PASSED is required. The binary is single-GPU rocSOLVER dgetrf and dgetrs at one N; rocSOLVER picks its own block size and factorization, so there is no num_gpus, process grid, block_size or panel_factorization parameter. output_format: csv"
+    "value": "Builds local bin/rochpl (rocSOLVER dense LU) with a hipcc GCC pin, then runs mpirun --allow-run-as-root -np 1 bin/rochpl --N. problem_size_N >=65536 is clamped to 32768. num_iterations is capped by timed_repeats (6 at N>=32768 baseline, 16 extended). Residual Check: PASSED is required. The binary is single-GPU rocSOLVER dgetrf and dgetrs at one N; rocSOLVER picks its own block size and factorization, so there is no num_gpus, process grid, block_size or panel_factorization parameter. output_format: csv"
   },
   {
     "field_name": "Execution Domain",
@@ -257,7 +257,7 @@
   {
     "field_name": "Runtime Language",
     "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
-    "value": "C (mpirun), C++ (rocHPL)"
+    "value": "C++ (rocSOLVER, launched with mpirun -np 1)"
   },
   {
     "field_name": "Container Base Image",
@@ -372,7 +372,7 @@
   {
     "field_name": "Installation and Execution Summary",
     "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
-    "value": "Build and run local bin/rochpl under mpirun --allow-run-as-root for yaml warmup plus timed repeats, parse GFLOPS, time-to-solution, and Residual Check, and abort if Residual Check is not PASSED, to measure sustained FP64 Linpack. Clamp problem_size_N from >=65536 to 32768"
+    "value": "Build and run local bin/rochpl under mpirun --allow-run-as-root for yaml warmup plus timed repeats, parse GFLOPS, time-to-solution, and Residual Check, and abort if Residual Check is not PASSED, to measure sustained FP64 dense LU. Clamp problem_size_N from >=65536 to 32768"
   },
   {
     "field_name": "Workload Command Line Executable",
@@ -392,7 +392,7 @@
   {
     "field_name": "Execution Summary (Run and Measure)",
     "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
-    "value": "Build and run local bin/rochpl under mpirun --allow-run-as-root for yaml warmup plus timed repeats, parse GFLOPS, time-to-solution, and Residual Check, and abort if Residual Check is not PASSED, to measure sustained FP64 Linpack. Clamp problem_size_N from >=65536 to 32768"
+    "value": "Build and run local bin/rochpl under mpirun --allow-run-as-root for yaml warmup plus timed repeats, parse GFLOPS, time-to-solution, and Residual Check, and abort if Residual Check is not PASSED, to measure sustained FP64 dense LU. Clamp problem_size_N from >=65536 to 32768"
   },
   {
     "field_name": "nVidia Porting Instructions (Reference Only)",

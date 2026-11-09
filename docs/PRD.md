@@ -12,16 +12,16 @@ This PRD.md section is populated from benchmark_specification.json, which is the
 320
 
 ## Workload Name
-rocHPL FP64 (High Performance Linpack)
+rocSOLVER FP64 Dense LU Solve (single GPU)
 
 ## Execution Summary (Run and Measure)
-Build and run local bin/rochpl under mpirun --allow-run-as-root for yaml warmup plus timed repeats, parse GFLOPS, time-to-solution, and Residual Check, and abort if Residual Check is not PASSED, to measure sustained FP64 Linpack. Clamp problem_size_N from >=65536 to 32768
+Build and run local bin/rochpl under mpirun --allow-run-as-root for yaml warmup plus timed repeats, parse GFLOPS, time-to-solution, and Residual Check, and abort if Residual Check is not PASSED, to measure sustained FP64 dense LU. Clamp problem_size_N from >=65536 to 32768
 
 ## Main Goal
-Measure sustained FP64 Linpack performance via rocSOLVER LU
+Measure sustained FP64 dense LU solve (getrf + getrs) throughput with rocSOLVER on one GPU
 
 ## Validation Objective
-Validates rocSOLVER LU Linpack TFLOPS, time-to-solution, and Residual Check: PASSED
+Validates rocSOLVER dense LU TFLOPS, time-to-solution, and Residual Check: PASSED
 
 ## Workload Category
 Compute & Math Kernels

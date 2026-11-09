@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # File: run_benchmark.sh
-# Description: Builds local bin/rochpl (rocSOLVER LU Linpack) with a hipcc GCC pin, then runs mpirun --allow-run-as-root -np 1 bin/rochpl --N.
+# Description: Builds local bin/rochpl (rocSOLVER dense LU) with a hipcc GCC pin, then runs mpirun --allow-run-as-root -np 1 bin/rochpl --N.
 # Execution: bash run_benchmark.sh [--smoke|--baseline|--extended]
 # Options: --smoke, --baseline, --extended, --config, --help
 # Requirements: bash, python3, repository-local .venv
@@ -18,8 +18,9 @@ usage() {
   cat <<'USAGE'
 Usage: bash run_benchmark.sh [OPTIONS]
 
-Workload Name:          rocHPL FP64 (High Performance Linpack)
-Main Goal:              Measure sustained FP64 Linpack performance via rocSOLVER LU
+Workload Name:          rocSOLVER FP64 Dense LU Solve (single GPU)
+Main Goal:              Measure sustained FP64 dense LU solve (getrf + getrs) throughput with
+                        rocSOLVER on one GPU
 Command Tools Executed: Build src/rochpl.cpp (rocSOLVER LU) with scripts/build.sh, then run mpirun
                         -np 1 bin/rochpl --N
 
