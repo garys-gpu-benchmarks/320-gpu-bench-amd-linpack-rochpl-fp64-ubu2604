@@ -40,6 +40,11 @@
     "value": "Build src/rochpl.cpp (rocSOLVER LU) with scripts/build.sh, then run mpirun -np 1 bin/rochpl --N"
   },
   {
+    "field_name": "Execution Description With Parameters",
+    "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
+    "value": "Builds local bin/rochpl (rocSOLVER dense LU) with a hipcc GCC pin, then runs mpirun --allow-run-as-root -np 1 bin/rochpl --N. problem_size_N >=65536 is clamped to 32768. num_iterations is capped by timed_repeats (6 at N>=32768 baseline, 16 extended). Residual Check: PASSED is required. The binary is single-GPU rocSOLVER dgetrf and dgetrs at one N; rocSOLVER picks its own block size and factorization, so there is no num_gpus, process grid, block_size or panel_factorization parameter. output_format: csv"
+  },
+  {
     "field_name": "Metrics",
     "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
     "value": "#1: Mean rocSOLVER LU FP64, TFLOPS (sustained_fp64_performance_across_problem_size_n_tflops); #2: Mean rocSOLVER LU time, s (time_to_solution_across_problem_size_n_s); #3: Mean percent of full MI300X FP64 matrix peak (percent_of_gpu_fp64_matrix_peak)"
@@ -173,11 +178,6 @@
     "field_name": "Command Methodology",
     "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
     "value": "Run local FP64 rocSOLVER dense LU (mpirun bin/rochpl) with yaml problem_size_N (smoke 4096, baseline/extended 32768; >=65536 clamped to 32768) on one GPU (rocSOLVER chooses its own blocking), repeat solves per timed_repeats, then parse Final Score GFLOPS, time-to-solution, and Residual Check"
-  },
-  {
-    "field_name": "Execution Description With Parameters",
-    "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
-    "value": "Builds local bin/rochpl (rocSOLVER dense LU) with a hipcc GCC pin, then runs mpirun --allow-run-as-root -np 1 bin/rochpl --N. problem_size_N >=65536 is clamped to 32768. num_iterations is capped by timed_repeats (6 at N>=32768 baseline, 16 extended). Residual Check: PASSED is required. The binary is single-GPU rocSOLVER dgetrf and dgetrs at one N; rocSOLVER picks its own block size and factorization, so there is no num_gpus, process grid, block_size or panel_factorization parameter. output_format: csv"
   },
   {
     "field_name": "Execution Domain",
